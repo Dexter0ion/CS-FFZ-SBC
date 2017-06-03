@@ -28,8 +28,10 @@ public class CellThread extends Thread {
                 Thread.sleep(SLEEP);
                 cellProcess.next();
                 Canvas canvas = surfaceHolder.lockCanvas();
-                displayView.doDraw(canvas);
-                surfaceHolder.unlockCanvasAndPost(canvas);
+                if (canvas != null) {
+                    displayView.doDraw(canvas);
+                    surfaceHolder.unlockCanvasAndPost(canvas);
+                }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
