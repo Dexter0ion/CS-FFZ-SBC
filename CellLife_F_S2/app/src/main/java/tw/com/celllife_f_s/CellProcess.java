@@ -50,8 +50,19 @@ public class CellProcess {
 
     public void next() {
         viewAllCell();
+        markChange();
         //DEBUG
         Log.i(TAG, "next: " + toString());
+    }
+
+    private void markChange() {
+        for (int i = 0; i < markData.length; i++) {
+            if (markData[i] == 3) data[i] = 1;
+            else if (markData[i] == 2) ;
+            else
+                data[i] = 0;
+
+        }
     }
 
     public boolean getStatus(int x, int y) {
