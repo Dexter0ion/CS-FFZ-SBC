@@ -22,6 +22,10 @@ public class MainActivity extends AppCompatActivity {
                 int height = Integer.parseInt(((EditText)findViewById(R.id.editHeight)).getText().toString());
                 Log.i(TAG, "onClick: width "+ width );
                 Log.i(TAG, "onClick: height "+ height );
+                Intent intent = new Intent(MainActivity.this,InitActivity.class);
+                intent.putExtra("width",width);
+                intent.putExtra("height",height);
+                startActivity(intent);
             }
         });
     }
