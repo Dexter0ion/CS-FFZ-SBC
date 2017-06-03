@@ -34,9 +34,9 @@ public class InitView extends SurfaceView implements SurfaceHolder.Callback {
             for (int j = 0; j < cellProcess.getHeight(); j++) {
                 int x = OFFWIDTH + i * SPAN;
                 int y = OFFHEIGHT + j * SPAN;
-                if(!cellProcess.getStatus(i,j)) {
-                    paint.setColor(Color.WHITE);
-                }else{
+                if (!cellProcess.getStatus(i, j)) {
+                    paint.setColor(Color.GRAY);
+                } else {
                     paint.setColor(Color.RED);
                 }
                 canvas.drawRect(x, y, x + SPAN, y + SPAN, paint);
@@ -63,7 +63,16 @@ public class InitView extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            int x = cellProcess.getX(event.getX());
+            int y = cellProcess.getY(event.getY());
+            if (x == -1 || y == -1)
+                return true;
+            cellProcess.changeStatus(x, y);
+            Canvas canvas = getHolder().lockCanvas();
+            doDraw(canvas);
+            getHolder().unlockCanvasAndPost(canvas);
+        }
         return true;
     }
 }

@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:text="请输入宽度" />
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:id="@+id/editWidth"/>
     </LinearLayout>
@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:text="请输入高度" />
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:id="@+id/editHeight"/>
     </LinearLayout>

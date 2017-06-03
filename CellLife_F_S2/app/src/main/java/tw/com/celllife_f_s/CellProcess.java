@@ -52,4 +52,27 @@ public class CellProcess {
         else
             return false;
     }
+
+    public int getX(float x) {
+        //boardCheck
+        if (x < InitView.OFFWIDTH || x > InitView.OFFWIDTH + InitView.SPAN * this.width)
+            return -1;
+        int xresult;
+        xresult = ((int) x - InitView.OFFWIDTH) / InitView.SPAN;
+        return xresult;
+    }
+
+    public int getY(float y) {
+        if (y < InitView.OFFHEIGHT || y > InitView.OFFHEIGHT + InitView.SPAN * this.height)
+            return -1;
+        int yresult = ((int) y - InitView.OFFHEIGHT) / InitView.SPAN;
+        return yresult;
+    }
+
+    public void changeStatus(int x, int y) {
+        if(data[x+y*width]==1)
+            data[x+y*width]=0;
+        else
+            data[x+y*width]=1;
+    }
 }
