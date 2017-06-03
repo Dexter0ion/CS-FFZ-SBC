@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -15,6 +16,8 @@ public class DisplayView extends SurfaceView implements SurfaceHolder.Callback {
     public static final String TAG = "DisplayView";
     CellProcess cellProcess;
     Paint paint;
+    int bufX;
+    int bufY;
     private CellThread cellThread;
 
     public DisplayView(Context context, final CellProcess cellProcess) {
@@ -24,13 +27,12 @@ public class DisplayView extends SurfaceView implements SurfaceHolder.Callback {
         this.cellProcess = cellProcess;
     }
 
-
     public void doDraw(Canvas canvas) {
         canvas.drawColor(Color.WHITE);
         for (int i = 0; i < cellProcess.getWidth(); i++) {
             for (int j = 0; j < cellProcess.getHeight(); j++) {
-                int x = InitView.OFFWIDTH + i * InitView.SPAN;
-                int y = InitView.OFFHEIGHT + j * InitView.SPAN;
+                int x = InitView.OFFWIDTH + i * InitView.SPAN + cellProcess.getOffsetX();
+                int y = InitView.OFFHEIGHT + j * InitView.SPAN + cellProcess.getOffsetY();
                 if (!cellProcess.getStatus(i, j)) {
                     paint.setColor(Color.GRAY);
                 } else {
@@ -46,7 +48,7 @@ public class DisplayView extends SurfaceView implements SurfaceHolder.Callback {
         Canvas canvas = getHolder().lockCanvas();
         doDraw(canvas);
         getHolder().unlockCanvasAndPost(canvas);
-        cellThread = new CellThread(cellProcess,this);
+        cellThread = new CellThread(cellProcess, this);
         cellThread.start();
     }
 
@@ -59,5 +61,24 @@ public class DisplayView extends SurfaceView implements SurfaceHolder.Callback {
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
         cellThread.flag = false;
         cellThread = null;
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        int action = event.getAction();
+        if (action == MotionEvent.ACTION_DOWN){
+            bufX = (int) event.getX();
+            bufY = (int) event.getY();
+        }
+        if (action == MotionEvent.ACTION_MOVE) {
+            cellProcess.addOffsetX((event.getX() - bufX) / 2);
+            cellProcess.addOffsetY((event.getY() - bufY) / 2);
+            bufX = (int) event.getX();
+            bufY = (int) event.getY();
+        }
+        Canvas canvas = getHolder().lockCanvas();
+        doDraw(canvas);
+        getHolder().unlockCanvasAndPost(canvas);
+        return true;
     }
 }

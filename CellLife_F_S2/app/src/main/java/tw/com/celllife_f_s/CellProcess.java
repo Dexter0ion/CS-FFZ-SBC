@@ -1,18 +1,15 @@
 package tw.com.celllife_f_s;
 
-import android.util.Log;
-
-import java.util.Arrays;
-
 /**
  * Created by FuFangzhou on 2017/6/3.
  */
 public class CellProcess {
-    public static final String TAG = "CellProcess";
     private char[] data;
     private int width;
     private int height;
     private int[] markData;
+    private int offsetX;
+    private int offsetY;
 
     public CellProcess(char[] data, int width, int height) {
         this.data = data;
@@ -51,8 +48,6 @@ public class CellProcess {
     public void next() {
         viewAllCell();
         markChange();
-        //DEBUG
-        Log.i(TAG, "next: " + toString());
     }
 
     private void markChange() {
@@ -72,8 +67,17 @@ public class CellProcess {
             return false;
     }
 
+    public void setOffsetX(int offsetX) {
+        this.offsetX = offsetX;
+    }
+
+    public void setOffsetY(int offsetY) {
+        this.offsetY = offsetY;
+    }
+
     public int getX(float x) {
         //boardCheck
+        x -= offsetX;
         if (x < InitView.OFFWIDTH || x > InitView.OFFWIDTH + InitView.SPAN * this.width)
             return -1;
         int xresult;
@@ -82,6 +86,7 @@ public class CellProcess {
     }
 
     public int getY(float y) {
+        y -= offsetY;
         if (y < InitView.OFFHEIGHT || y > InitView.OFFHEIGHT + InitView.SPAN * this.height)
             return -1;
         int yresult = ((int) y - InitView.OFFHEIGHT) / InitView.SPAN;
@@ -137,5 +142,21 @@ public class CellProcess {
             System.out.println(sb);
         }
         return sb.toString();
+    }
+
+    public int getOffsetX() {
+        return offsetX;
+    }
+
+    public int getOffsetY() {
+        return offsetY;
+    }
+
+    public void addOffsetX(float v) {
+        this.offsetX += v;
+    }
+
+    public void addOffsetY(float v) {
+        this.offsetY += v;
     }
 }
