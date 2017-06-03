@@ -184,19 +184,15 @@ public class CellProcess {
         else
             return 0;
     }
-
     public int getVarColor() {
         return Color.rgb(var*20+20,50,50);
     }
-
     public void addVar() {
         this.var ++;
     }
-
     public int getInverseCorlor() {
         return Color.rgb(220-var*20,50,50);
     }
-
     public void setFullVar() {
         var = 10;
     }

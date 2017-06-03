@@ -1,7 +1,6 @@
 package tw.com.celllife_f_s;
 
 import android.graphics.Canvas;
-import android.util.Log;
 import android.view.SurfaceHolder;
 
 /**
@@ -13,7 +12,6 @@ public class CellThread extends Thread {
     private CellProcess cellProcess;
     private SurfaceHolder surfaceHolder;
     private DisplayView displayView;
-    public static final String TAG = "CellThread";
 
     public CellThread(CellProcess cellProcess, DisplayView displayView) {
         this.cellProcess = cellProcess;

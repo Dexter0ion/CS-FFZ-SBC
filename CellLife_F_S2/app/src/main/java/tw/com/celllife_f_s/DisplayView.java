@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -13,7 +12,6 @@ import android.view.SurfaceView;
  * Created by FuFangzhou on 2017/6/3.
  */
 public class DisplayView extends SurfaceView implements SurfaceHolder.Callback {
-    public static final String TAG = "DisplayView";
     CellProcess cellProcess;
     Paint paint;
     int bufX;
