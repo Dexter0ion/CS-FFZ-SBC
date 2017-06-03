@@ -27,10 +27,14 @@ public class CellThread extends Thread {
             try {
                 Thread.sleep(SLEEP);
                 cellProcess.next();
-                Canvas canvas = surfaceHolder.lockCanvas();
-                if (canvas != null) {
-                    displayView.doDraw(canvas);
-                    surfaceHolder.unlockCanvasAndPost(canvas);
+                for (int i = 0; i < CellProcess.MAXVAR; i++) {
+                    cellProcess.addVar();
+                    Canvas canvas = surfaceHolder.lockCanvas();
+                    if (canvas != null) {
+                        displayView.doDraw(canvas);
+                        surfaceHolder.unlockCanvasAndPost(canvas);
+                    }
+                    Thread.sleep(SLEEP/cellProcess.MAXVAR);
                 }
             } catch (InterruptedException e) {
                 e.printStackTrace();

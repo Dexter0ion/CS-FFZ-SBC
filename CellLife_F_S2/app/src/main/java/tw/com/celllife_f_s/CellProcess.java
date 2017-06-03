@@ -1,15 +1,22 @@
 package tw.com.celllife_f_s;
 
+import android.graphics.Color;
+
+import java.util.ArrayList;
+
 /**
  * Created by FuFangzhou on 2017/6/3.
  */
 public class CellProcess {
+    public static final int MAXVAR = 10;
     private char[] data;
     private int width;
     private int height;
     private int[] markData;
     private int offsetX;
     private int offsetY;
+    private int var;
+    private ArrayList<Integer> list = new ArrayList<>();
 
     public CellProcess(char[] data, int width, int height) {
         this.data = data;
@@ -46,17 +53,24 @@ public class CellProcess {
     }
 
     public void next() {
+        list.removeAll(list);
         viewAllCell();
         markChange();
     }
 
     private void markChange() {
         for (int i = 0; i < markData.length; i++) {
-            if (markData[i] == 3) data[i] = 1;
+            if (markData[i] == 3) {
+                if (data[i]==0)
+                    list.add(i);
+                data[i] = 1;
+            }
             else if (markData[i] == 2) ;
-            else
+            else {
+                if (data[i]==1)
+                    list.add(i);
                 data[i] = 0;
-
+            }
         }
     }
 
@@ -158,5 +172,20 @@ public class CellProcess {
 
     public void addOffsetY(float v) {
         this.offsetY += v;
+    }
+
+    public boolean check(int x, int y) {
+        if (list.contains(x+y*width))
+            return false;
+        else
+            return true;
+    }
+
+    public int getVarColor() {
+        return Color.rgb(var*20,100,100);
+    }
+
+    public void addVar() {
+        this.var ++;
     }
 }

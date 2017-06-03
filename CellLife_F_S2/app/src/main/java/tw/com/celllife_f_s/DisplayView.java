@@ -33,10 +33,14 @@ public class DisplayView extends SurfaceView implements SurfaceHolder.Callback {
             for (int j = 0; j < cellProcess.getHeight(); j++) {
                 int x = InitView.OFFWIDTH + i * InitView.SPAN + cellProcess.getOffsetX();
                 int y = InitView.OFFHEIGHT + j * InitView.SPAN + cellProcess.getOffsetY();
-                if (!cellProcess.getStatus(i, j)) {
-                    paint.setColor(Color.GRAY);
-                } else {
-                    paint.setColor(Color.RED);
+                if (cellProcess.check(i,j)) {
+                    if (!cellProcess.getStatus(i, j)) {
+                        paint.setColor(Color.GRAY);
+                    } else {
+                        paint.setColor(Color.RED);
+                    }
+                }else{
+                    paint.setColor(cellProcess.getVarColor());
                 }
                 canvas.drawRect(x, y, x + InitView.SPAN, y + InitView.SPAN, paint);
             }
