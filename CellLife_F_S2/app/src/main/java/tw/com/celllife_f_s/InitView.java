@@ -46,6 +46,18 @@ public class InitView extends SurfaceView implements SurfaceHolder.Callback {
                 canvas.drawRect(x, y, x + SPAN, y + SPAN, paint);
             }
         }
+        for (int i = 0; i < cellProcess.getWidth(); i++) {
+            int bx = OFFWIDTH + cellProcess.getOffsetX() + i * SPAN;
+            int by = OFFHEIGHT + cellProcess.getOffsetY();
+            paint.setColor(Color.BLACK);
+            canvas.drawLine(bx, by, bx, by + cellProcess.getHeight() * SPAN, paint);
+        }//绘制
+        for (int i = 0; i < cellProcess.getHeight(); i++) {
+            int bx = OFFWIDTH + cellProcess.getOffsetX();
+            int by = OFFHEIGHT + cellProcess.getOffsetY() + i * SPAN;
+            paint.setColor(Color.BLACK);
+            canvas.drawLine(bx, by, bx + cellProcess.getWidth() * SPAN, by, paint);
+        }
     }
 
     @Override
@@ -78,9 +90,9 @@ public class InitView extends SurfaceView implements SurfaceHolder.Callback {
             cellProcess.changeStatus(x, y);
         } else if (action == MotionEvent.ACTION_MOVE) {
             Log.i(TAG, "onTouchEvent: ");
-            cellProcess.addOffsetX((event.getX()-bufX)/2);
-            cellProcess.addOffsetY((event.getY()-bufY)/2);
-            Log.i(TAG, "onTouchEvent: "+ cellProcess.getOffsetX());
+            cellProcess.addOffsetX((event.getX() - bufX) / 2);
+            cellProcess.addOffsetY((event.getY() - bufY) / 2);
+            Log.i(TAG, "onTouchEvent: " + cellProcess.getOffsetX());
             bufX = (int) event.getX();
             bufY = (int) event.getY();
         }

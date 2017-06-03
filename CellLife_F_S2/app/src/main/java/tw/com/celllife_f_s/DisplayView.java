@@ -41,6 +41,18 @@ public class DisplayView extends SurfaceView implements SurfaceHolder.Callback {
                 canvas.drawRect(x, y, x + InitView.SPAN, y + InitView.SPAN, paint);
             }
         }
+        for (int i = 0; i < cellProcess.getWidth(); i++) {
+            int bx = InitView.OFFWIDTH + cellProcess.getOffsetX() + i * InitView.SPAN;
+            int by = InitView.OFFHEIGHT + cellProcess.getOffsetY();
+            paint.setColor(Color.BLACK);
+            canvas.drawLine(bx, by, bx, by + cellProcess.getHeight() * InitView.SPAN, paint);
+        }//绘制
+        for (int i = 0; i < cellProcess.getHeight(); i++) {
+            int bx = InitView.OFFWIDTH + cellProcess.getOffsetX();
+            int by = InitView.OFFHEIGHT + cellProcess.getOffsetY() + i * InitView.SPAN;
+            paint.setColor(Color.BLACK);
+            canvas.drawLine(bx, by, bx + cellProcess.getWidth() * InitView.SPAN, by, paint);
+        }
     }
 
     @Override
