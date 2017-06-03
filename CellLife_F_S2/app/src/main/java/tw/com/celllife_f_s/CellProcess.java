@@ -17,7 +17,7 @@ public class CellProcess {
     private int offsetY;
     private int var;
     private ArrayList<Integer> list = new ArrayList<>();
-
+    private ArrayList<Integer> list2 = new ArrayList<>();
     public CellProcess(char[] data, int width, int height) {
         this.data = data;
         this.width = width;
@@ -53,7 +53,9 @@ public class CellProcess {
     }
 
     public void next() {
+        var = 0;
         list.removeAll(list);
+        list2.removeAll(list2);
         viewAllCell();
         markChange();
     }
@@ -68,7 +70,7 @@ public class CellProcess {
             else if (markData[i] == 2) ;
             else {
                 if (data[i]==1)
-                    list.add(i);
+                    list2.add(i);
                 data[i] = 0;
             }
         }
@@ -174,18 +176,28 @@ public class CellProcess {
         this.offsetY += v;
     }
 
-    public boolean check(int x, int y) {
+    public int check(int x, int y) {
         if (list.contains(x+y*width))
-            return false;
+            return 1;
+        else if(list2.contains(x+y*width))
+            return 2;
         else
-            return true;
+            return 0;
     }
 
     public int getVarColor() {
-        return Color.rgb(var*20,100,100);
+        return Color.rgb(var*20+20,50,50);
     }
 
     public void addVar() {
         this.var ++;
+    }
+
+    public int getInverseCorlor() {
+        return Color.rgb(220-var*20,50,50);
+    }
+
+    public void setFullVar() {
+        var = 10;
     }
 }

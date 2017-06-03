@@ -8,7 +8,7 @@ import android.view.SurfaceHolder;
  * Created by FuFangzhou on 2017/6/3.
  */
 public class CellThread extends Thread {
-    public static final int SLEEP = 1000;
+    public static final int SLEEP = 500;
     public boolean flag = true;
     private CellProcess cellProcess;
     private SurfaceHolder surfaceHolder;
@@ -29,6 +29,8 @@ public class CellThread extends Thread {
                 cellProcess.next();
                 for (int i = 0; i < CellProcess.MAXVAR; i++) {
                     cellProcess.addVar();
+                    if (i==CellProcess.MAXVAR-1)
+                        cellProcess.setFullVar();
                     Canvas canvas = surfaceHolder.lockCanvas();
                     if (canvas != null) {
                         displayView.doDraw(canvas);
