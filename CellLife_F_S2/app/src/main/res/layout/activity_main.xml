@@ -40,4 +40,17 @@
         android:layout_height="wrap_content"
         android:text="确认"
         android:id="@+id/commit"/>
+
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/monkey"
+        android:id="@+id/monkey"/>
+
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/china"
+        android:id="@+id/china" />
+
 </LinearLayout>

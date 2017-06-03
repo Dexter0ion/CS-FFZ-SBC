@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import java.util.Arrays;
+
 public class InitActivity extends AppCompatActivity {
 
     private static final String TAG = "InitActivity";
@@ -24,9 +26,17 @@ public class InitActivity extends AppCompatActivity {
         Intent intent = getIntent();
         width = intent.getIntExtra("width", -1);
         height = intent.getIntExtra("height", -1);
-        char[] data = new char[width * height];
-        for (int i = 0; i < width * height; i++) {
-            data[i] = 0;
+        char[] data = null;
+        if (!intent.getBooleanExtra("default", false)) {
+            data = new char[width * height];
+            for (int i = 0; i < width * height; i++) {
+                data[i] = 0;
+            }
+        } else {
+            if (intent.getIntExtra("type", 0) == 1)
+                data = Arrays.copyOf(MainActivity.MOKKEY, MainActivity.MOKKEY.length);
+            else if (intent.getIntExtra("type", 0) == 2)
+                data = Arrays.copyOf(MainActivity.CHINA, MainActivity.CHINA.length);
         }
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(SCREENWIDTH, SCREENWIDTH / 3);
         LinearLayout.LayoutParams lp2 = new LinearLayout.LayoutParams(SCREENWIDTH, SCREENHEIGHT / 3 * 2);
