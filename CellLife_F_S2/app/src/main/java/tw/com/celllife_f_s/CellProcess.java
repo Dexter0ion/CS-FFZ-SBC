@@ -8,7 +8,8 @@ public class CellProcess {
     private int width;
     private int height;
 
-    public CellProcess(int width, int height) {
+    public CellProcess(char[] data, int width, int height) {
+        this.data = data;
         this.width = width;
         this.height = height;
     }
@@ -43,5 +44,12 @@ public class CellProcess {
 
     public void next() {
 
+    }
+
+    public boolean getStatus(int x, int y) {
+        if (data[x + y * width] == 1)
+            return true;
+        else
+            return false;
     }
 }

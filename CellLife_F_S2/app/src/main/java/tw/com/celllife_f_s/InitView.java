@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -23,6 +24,7 @@ public class InitView extends SurfaceView implements SurfaceHolder.Callback {
         super(context);
         this.cellProcess = cellprocess;
         paint = new Paint();
+        paint.setStyle(Paint.Style.FILL);
         getHolder().addCallback(this);
     }
 
@@ -32,8 +34,11 @@ public class InitView extends SurfaceView implements SurfaceHolder.Callback {
             for (int j = 0; j < cellProcess.getHeight(); j++) {
                 int x = OFFWIDTH + i * SPAN;
                 int y = OFFHEIGHT + j * SPAN;
-                paint.setColor(Color.BLACK);
-                paint.setStyle(Paint.Style.STROKE);
+                if(!cellProcess.getStatus(i,j)) {
+                    paint.setColor(Color.WHITE);
+                }else{
+                    paint.setColor(Color.RED);
+                }
                 canvas.drawRect(x, y, x + SPAN, y + SPAN, paint);
             }
         }
@@ -54,5 +59,11 @@ public class InitView extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
 
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        
+        return true;
     }
 }
