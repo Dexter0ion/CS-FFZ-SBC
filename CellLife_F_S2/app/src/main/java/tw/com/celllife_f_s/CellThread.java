@@ -25,7 +25,6 @@ public class CellThread extends Thread{
     public void run() {
         while (flag){
             try {
-                Log.i(TAG, "run: ");
                 cellProcess.next();
                 Canvas canvas = surfaceHolder.lockCanvas();
                 displayView.doDraw(canvas);

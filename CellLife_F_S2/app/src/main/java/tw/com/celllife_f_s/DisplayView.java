@@ -15,6 +15,7 @@ public class DisplayView extends SurfaceView implements SurfaceHolder.Callback {
     public static final String TAG = "DisplayView";
     CellProcess cellProcess;
     Paint paint;
+    private CellThread cellThread;
 
     public DisplayView(Context context, final CellProcess cellProcess) {
         super(context);
@@ -45,7 +46,7 @@ public class DisplayView extends SurfaceView implements SurfaceHolder.Callback {
         Canvas canvas = getHolder().lockCanvas();
         doDraw(canvas);
         getHolder().unlockCanvasAndPost(canvas);
-        CellThread cellThread = new CellThread(cellProcess,this);
+        cellThread = new CellThread(cellProcess,this);
         cellThread.start();
     }
 
@@ -56,6 +57,7 @@ public class DisplayView extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
-
+        cellThread.flag = false;
+        cellThread = null;
     }
 }
