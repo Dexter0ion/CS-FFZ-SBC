@@ -11,7 +11,6 @@ public class LifeView extends SurfaceView implements SurfaceHolder.Callback {
     CellProcess cellProcess;
     public LifeView(Context context) {
         super(context);
-        cellProcess = new CellProcess();
         getHolder().addCallback(this);
     }
 

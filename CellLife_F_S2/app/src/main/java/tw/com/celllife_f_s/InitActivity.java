@@ -8,17 +8,16 @@ import android.util.Log;
 public class InitActivity extends AppCompatActivity {
 
     private static final String TAG = "InitActivity";
+    public static CellProcess cellprocess;
     int width;
     int height;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_init);
         Intent intent = getIntent();
         width = intent.getIntExtra("width",-1);
         height = intent.getIntExtra("height",-1);
-        Log.i(TAG, "onCreate: width"+width);
-        Log.i(TAG, "onCreate: height"+height);
-
+        cellprocess = new CellProcess(width,height);
+        setContentView(new InitView(this,cellprocess));
     }
 }
