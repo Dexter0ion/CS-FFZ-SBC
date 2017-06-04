@@ -16,6 +16,7 @@ public class DisplayView extends SurfaceView implements SurfaceHolder.Callback {
     Paint paint;
     int bufX;
     int bufY;
+    int bufX2;
     private CellThread cellThread;
 
     public DisplayView(Context context, final CellProcess cellProcess) {
@@ -84,19 +85,37 @@ public class DisplayView extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         int action = event.getAction();
-        if (action == MotionEvent.ACTION_DOWN){
-            bufX = (int) event.getX();
-            bufY = (int) event.getY();
+        if (event.getPointerCount() == 2) {
+            if (action == MotionEvent.ACTION_DOWN) {
+                bufX2 = (int) Math.abs(event.getX(0) - event.getX(1));
+            }
+            if (action == MotionEvent.ACTION_MOVE) {
+                int buf = (int) Math.abs(event.getX(0) - event.getX(1));
+                int value = buf - bufX2;
+                if (value > 20 )
+                    value = 20;
+                else if(value < -20)
+                    value = -20;
+                else
+                    value /= 2;
+                InitView.SPAN= InitView.SPAN + value;
+                bufX2 = buf;
+            }
+        }else {
+            if (action == MotionEvent.ACTION_DOWN) {
+                bufX = (int) event.getX();
+                bufY = (int) event.getY();
+            }
+            if (action == MotionEvent.ACTION_MOVE) {
+                cellProcess.addOffsetX((event.getX() - bufX) / 2);
+                cellProcess.addOffsetY((event.getY() - bufY) / 2);
+                bufX = (int) event.getX();
+                bufY = (int) event.getY();
+            }
+            Canvas canvas = getHolder().lockCanvas();
+            doDraw(canvas);
+            getHolder().unlockCanvasAndPost(canvas);
         }
-        if (action == MotionEvent.ACTION_MOVE) {
-            cellProcess.addOffsetX((event.getX() - bufX) / 2);
-            cellProcess.addOffsetY((event.getY() - bufY) / 2);
-            bufX = (int) event.getX();
-            bufY = (int) event.getY();
-        }
-        Canvas canvas = getHolder().lockCanvas();
-        doDraw(canvas);
-        getHolder().unlockCanvasAndPost(canvas);
         return true;
     }
 }
